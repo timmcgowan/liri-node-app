@@ -1,18 +1,15 @@
+require('dotenv').load(); // for .env properties
 var Spotify = require('node-spotify-api');
 var moment = require('moment');
+var keys = require('./key.js');
 var bandsintown = require('bandsintown')('codingbootcamp');
 var fs = require("fs"); // for reading random file
 var request = require("request");
-require('dotenv').load(); // for .env properties
-console.log(process.env);
-console.log(process.env.SECRET_KEY)
 
 // concert-this
 // spotify-this-song ** Not currently supported.
 // movie-this
 // do-what-it-says
-
-
 var debug = "true" // toggle for debugging
 
 // Action Handle
@@ -126,26 +123,47 @@ function movie_this(movie) {
 // ****** +Spotify HANDLE * * ******
 function spotify_this(song) {
     // need more
-    var spoti = new Spotify(keys.spotify);
+    var spotify = new Spotify(keys.spotify);
+    var tracksObj;
 
-    spoti.searchTracks('Love', function (err, sdata) {
-        if (err) {
-            console.error('Something went wrong', err.message);
-            return;
-            // Print some information about the results
-            console.log('I got ' + sdata.body.tracks.total + ' results!')
-            // Loop Through the newly created output array
-            for (var i = 0; i < output.length; i++) {
-
-                // Print each element (item) of the array/
-                console.log(output[i]);
-                //   Artist(s)
+    spotify
+        .search({ type: 'track', query: song, limit: 5 })
+        .then(function (response) {
+            //renderDebugTxt('Spotify JSON: ', response);
+            tracksObj = response.tracks;
+            //console.log(tracksObj);
+            var items = tracksObj.items;
+            var x;
+            for (x in items) {
+                renderDebugTxt('Track Items: ', items[x]);
+                renderTxt('', "++++++++++++++++++++++++++++++++++++++++++++++");
                 // The song's name
+                renderTxt('Song Name: ', items[x].Name);
+                // Artist(s)
+                renderTxt('Artist(s): ', '');
+                var artist;
+                var artistsObj = items[x].artists;
+                for (artist in artistsObj) {
+                    renderTxt('+ ', artistsObj[artist].name);
+                }
                 // A preview link of the song from Spotify
+                renderTxt('Preview Link: ', items[x].preview_url);
                 // The album that the song is from
+                renderDebugTxt('Album Obj: ', items[x].album);
+                var a;
+                var albumObj = items[x].album;
+                for (a in albumObj) {
+                    renderTxt('+> ', albumObj[a].name);
+                }
+                //    }
+                // }
             }
-        }
-    });
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+
+
 }
 // ******* -Spotify FILE HANDLE * * ******
 
