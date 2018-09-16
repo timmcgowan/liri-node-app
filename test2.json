@@ -1,0 +1,26 @@
+{
+    "id": "100094393",
+    "artist_id": "5585634",
+    "url": "https:\/\/www.bandsintown.com\/e\/100094393?app_id=codingbootcamp&came_from=267&utm_medium=api&utm_source=public_api&utm_campaign=event",
+    "on_sale_datetime": "",
+    "datetime": "2018-11-18T15:30:00",
+    "description": "",
+    "venue": {
+        "country": "Germany",
+        "city": "Düsseldorf",
+        "latitude": "51.2277411",
+        "name": "BigCityBeats WORLD CLUB DOME",
+        "region": "",
+        "longitude": "6.773455599999998"
+    },
+    "lineup": [
+        "Marshmello"
+    ],
+    "offers": [
+        {
+            "type": "Tickets",
+            "url": "https:\/\/www.bandsintown.com\/t\/100094393?app_id=codingbootcamp&came_from=267&utm_medium=api&utm_source=public_api&utm_campaign=ticket",
+            "status": "available"
+        }
+    ]
+}
