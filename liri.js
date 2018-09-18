@@ -14,25 +14,31 @@ var debug = "true" // toggle for debugging
 
 // Action Handle
 var action = process.argv[2];
+var arg = process.argv[3];
 
-// Determine which function gets run.
-switch (action) {
-    case "concert-this": // concert-this
-        concert_this(process.argv[3]);
-        break;
+runSwitch(action, arg);
 
-    case "spotify-this": // spotify-this-song
-        spotify_this(process.argv[3]);
-        break;
+function runSwitch(a, arg) {
+    // Determine which function gets run.
+    switch (a) {
+        case "concert-this": // concert-this
+            concert_this(arg);
+            break;
 
-    case "movie-this":  // movie-this
-        movie_this(process.argv[3]);
-        break;
+        case "spotify-this-song": // spotify-this-song
+            spotify_this(arg);
+            break;
 
-    case "do-what-it-says":  // do-what-it-says
-        doWhat();
-        break;
+        case "movie-this":  // movie-this
+            movie_this(arg);
+            break;
+
+        case "do-what-it-says":  // do-what-it-says
+            doWhat();
+            break;
+    }
 }
+
 
 function renderDebugTxt(a, b) {
     if (debug === "true") {
@@ -169,12 +175,24 @@ function spotify_this(song) {
 
 // ****** +do-what-it-says HANDLE * * ******
 function doWhat() {
-    // need more
-    var spotify = new Spotify(keys.spotify);
-    fs.readFile("random.txt", "utf8", function (err, data) {
-        if (err) {
-            return console.log(err);
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        // errors it will log the error to the console.
+        if (error) {
+            return console.log(error);
         }
+
+        // We will then print the contents of data
+        //console.log(data);
+
+        // Then split it by commas (to make it more readable)
+        var dataArr = data.split(",");
+        var act = dataArr[0];
+        var arg = dataArr[1];
+        // We will then re-display the content as an array for later use.
+        //console.log(act, arg);
+        runSwitch(act, arg);
     });
+
+
 }
 // ****** * *  -do-what-it-says HANDLE * * ******
